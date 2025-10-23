@@ -104,7 +104,7 @@ if not st.session_state.logged_in:
             st.session_state.user_name = user.iloc[0]["이름"]
             st.session_state.role = user.iloc[0]["역할"]
             st.success(f"{st.session_state.user_name}님 환영합니다!")
-            st.experimental_rerun()
+            st.rerun()
         else:
             st.error("로그인 정보가 올바르지 않습니다.")
     st.stop()
@@ -151,7 +151,7 @@ if menu == "성적 입력/수정":
             df_all = pd.concat([df_all, pd.DataFrame([new])], ignore_index=True)
             df_all.to_csv(DATA_FILE, index=False)
             st.success("저장 완료 ✅")
-            st.experimental_rerun()
+            st.rerun()
 
     st.subheader("내가 입력한 데이터")
     my_data = df_all if role=="admin" else df_all[df_all["작성자_ID"]==user_id]
@@ -192,4 +192,4 @@ elif menu == "데이터 관리" and role=="admin":
         st.download_button("다운로드", df_all.to_csv(index=False).encode("utf-8"), file_name=DATA_FILE)
     if st.button("전체 삭제 (주의)"):
         os.remove(DATA_FILE)
-        st.experimental_rerun()
+        st.rerun()
